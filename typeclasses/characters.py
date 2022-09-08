@@ -30,3 +30,15 @@ class Character(DefaultCharacter):
     at_post_puppet - Echoes "AccountName has entered the game" to the room.
 
     """
+    def at_object_creation(self):
+        "This is called when object is first created, updates will require reset/reloaded characters"   
+        self.db.power = 1
+        self.db.currentHp = 10
+        self.db.maxHp = 10
+
+    def return_appearance(self, looker):
+        "This is going to be used for like, custom descriptions n stuff. Until i setup that though, just an hp counter"
+        text = super().return_appearance(looker)
+        text = self.db.currentHP + "/" self.db.maxHp
+        return text
+        
