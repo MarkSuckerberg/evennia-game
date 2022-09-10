@@ -39,6 +39,6 @@ class Character(DefaultCharacter):
     def return_appearance(self, looker):
         "This is going to be used for like, custom descriptions n stuff. Until i setup that though, just an hp counter"
         text = super().return_appearance(looker)
-        text = str(self.db.currentHP) + "/" + str(self.db.maxHp)
+        text += "\n" + str(self.db.currentHP) + "/" + str(self.db.maxHp)
         return text
         
