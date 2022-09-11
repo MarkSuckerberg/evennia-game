@@ -23,22 +23,20 @@ class CmdEnterVehicle(Command):
     def parse(self):
         # Snags whatever the targeted vehicle is.
         # Important for 'landing bay' areas.
-        target = self.caller.search(self.args.lstrip())
-        if not target:
-            #Sort of a reminder to consider an error message
-            #But i don't know if parse will flip its shit
-            #with an actual command in it
-            #self.caller.msg("No vehicle found")
-            raise InterruptCommand()
-
+        self.target = self.args.strip()
 
     def func(self):
         caller = self.caller
 
+        if not self.target:
+            #Sort of a reminder to consider an error message
+            #self.caller.msg("No vehicle found")
+            return
+
         target = caller.search(self.target)
         caller.location.msg_contents(f"{caller.key} enters the {target}.")
 
-        caller.move_to(train)
+        caller.move_to(target)
 
 
 class CmdLeaveVehicle(Command):
@@ -57,11 +55,8 @@ class CmdLeaveVehicle(Command):
     locks = "cmd:cmdLocationCheck()"
 
     def func(self):
-        # The next 3 lines are just shamelessly
-        # Stolen from the train tutorial, given
-        # That they work just fine.
-        train = self.obj
-        parent = train.location
+        vehicle = self.obj
+        parent = vehicle.location.location
         self.caller.move_to(parent)
 
 class CmdSetVehicle(CmdSet):
