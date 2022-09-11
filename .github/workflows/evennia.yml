@@ -38,8 +38,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run Evennia
       run: |
+        evennia migrate --gamedir ./game
         evennia start --gamedir ./game
         evennia stop --gamedir ./game
     - name: Test Evennia
       run: |
-        evennia test ./game
+        evennia test --gamedir ./game
