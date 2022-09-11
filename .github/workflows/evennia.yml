@@ -11,12 +11,15 @@ on:
     branches: 
       - "master"
 
+env:
+  DJANGO_SUPERUSER_USERNAME: test
+  DJANGO_SUPERUSER_PASSWORD: test
+
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +42,8 @@ jobs:
     - name: Run Evennia
       run: |
         evennia migrate --gamedir ./game
-        evennia start --gamedir ./game
+        evennia createsuperuser --noinput ./game
+        evennia start --gamedir ./game --dummyrunner 10
         evennia stop --gamedir ./game
     - name: Test Evennia
       run: |
