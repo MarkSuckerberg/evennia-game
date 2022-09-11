@@ -42,7 +42,7 @@ jobs:
     - name: Run Evennia
       run: |
         evennia migrate --gamedir ./game
-        evennia createsuperuser --noinput ./game
+        evennia createsuperuser --noinput --gamedir ./game
         evennia start --gamedir ./game --dummyrunner 10
         evennia stop --gamedir ./game
     - name: Test Evennia
