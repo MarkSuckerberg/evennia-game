@@ -28,3 +28,14 @@ lock functions from evennia.locks.lockfuncs.
 #    """
 #    print "%s tried to access %s. Access denied." % (accessing_obj, accessed_obj)
 #    return False
+
+def cmdLocationCheck(accessing_obj, accessed_obj, *args, **kwargs):
+    """
+    Usage: cmdLocationCheck()
+    A simple check to see if the player(accessing_obj) is in the
+    same location/room as the acccessed_obj, which could be a
+    vehicle, door, or anything inbetween.
+    """
+    accessorParent = accessing_obj.location
+    accessedParent = accessed_obj.location
+    return accessedParent == accessorParent
