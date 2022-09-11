@@ -56,36 +56,6 @@ class Command(BaseCommand):
 
     pass
 
-class CmdSetPower(Command):
-    """
-    set the power of a character
-
-    Usage: 
-      +setpower <1-10>
-
-    This sets the power of the current character. This can only be 
-    used during character generation.    
-    """
-
-    key = "+setpower"
-    help_category = "mush"
-
-    def func(self: CmdSelf) -> None:
-        errmsg = "You must specify a number between 1 and 10."
-        if not self.args:
-            self.caller.msg(errmsg)
-            return
-        try:
-            power = int(self.args)
-        except ValueError:
-            self.caller.msg(errmsg)
-            return
-        if not (1<= power <= 10):
-            self.caller.msg(errmsg)
-            return
-        self.caller.db.power = power
-        self.caller.msg(f"Your power was set to {power}.")
-
 
 # -------------------------------------------------------------
 #
