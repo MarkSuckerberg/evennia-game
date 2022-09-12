@@ -60,4 +60,7 @@ class CmdLeaveVehicle(Command):
 class CmdSetVehicle(CmdSet):
     def at_cmdset_creation(self):
             self.add(CmdEnterVehicle())
+
+class CmdSetDoor(CmdSet):
+    def at_cmdset_creation(self):
             self.add(CmdLeaveVehicle())
