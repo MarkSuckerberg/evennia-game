@@ -32,7 +32,7 @@ class CmdEnterVehicle(Command):
             #self.caller.msg("No vehicle found")
             #return
         target = self.obj
-        caller.location.msg_contents(f"{caller.key} enters the {target}.")
+        caller.location.msg_contents("%s enters the %s.") % (caller.key, target)
         caller.move_to(target)
 
 
@@ -52,10 +52,12 @@ class CmdLeaveVehicle(Command):
     locks = "cmd:cmdLocationCheck()"
 
     def func(self):
+        caller = self.caller
         door = self.obj
         vehicle = door.location
         parent = vehicle.location
-        self.caller.move_to(parent)
+        caller.location.msg_contents("%s exits the %s via the %s.") % (caller.key, vehicle, door)
+        caller.move_to(parent)
 
 class CmdSetVehicle(CmdSet):
     def at_cmdset_creation(self):
