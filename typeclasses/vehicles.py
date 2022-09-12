@@ -28,3 +28,10 @@ class VehicleDoorObject(DefaultObject):
         # Where it can be set down, and be ready for use.
 
         self.cmdset.add_default(CmdSetVehicle)
+
+    def return_appearance(self, looker):
+        vehicle = self.location
+        parent = vehicle.location
+
+        outside = super().return_appearance(parent)
+        return outside
