@@ -14,10 +14,10 @@ from evennia import Command, CmdSet
 class CmdAttack(Command):
     """
     Attack the enemy. Commands:
-      slash <enemy>
+      hit [<enemy>]
       parry
 
-    slash - Your run of the mill attack
+    hit - Your run of the mill attack
     parry - forgoes your attack but will make you harder to hit on next
             enemy attack.
     """
@@ -30,13 +30,6 @@ class CmdAttack(Command):
         "hit",
         "kill",
         "fight",
-        "thrust",
-        "pierce",
-        "stab",
-        "slash",
-        "chop",
-        "bash",
-        "parry",
         "defend",
     ]
     locks = "cmd:all()"
@@ -46,12 +39,12 @@ class CmdAttack(Command):
         cmdstring = self.cmdstring
         caller = self.caller
         if cmdstring in ("attack", "fight"):
-            text = "How do you want to fight? Choose 'slash' or 'defend'."
+            text = "How do you want to fight? Choose 'hit' or 'defend'."
             caller.msg(text)
             return
 
         # parry mode
-        if cmdstring in ("parry", "defend"):
+        if cmdstring in ("defend"):
             text = ("You raise your weapon in a defensive pose, ready to block the next enemy attack.")
             caller.msg(text)
             caller.db.combatDefending = True
@@ -65,9 +58,13 @@ class CmdAttack(Command):
         if not target:
             return
 
-        if cmdstring in ("slash", "chop", "bash"):
-            hit = float(self.obj.db.hit) + (float(caller.db.power)/10)
-            damage = self.obj.db.damage + caller.db.power
+        if cmdstring in ("hit","kill"):
+            # the base hit chance in weapons is accessed as:
+            # float(self.obj.db.hit)
+            hit = .4 + (float(caller.db.power)/10/2)
+            # the damage chance in weapons is accessed as:
+            # self.obj.db.damage
+            damage = 1 + caller.db.power
             string = "You slash with %s. " % self.obj.key
             tstring = "%s slash at you with %s. " % (caller.key, self.obj.key)
             ostring = "%s slash at %s with %s. " % (caller.key, target.key, self.obj.key)
@@ -105,6 +102,9 @@ class CmdAttack(Command):
             target.msg(tstring + "|gThey miss you.|n")
             caller.location.msg_contents(ostring + "They miss.", exclude=[target, caller])
 
+class CmdSetCombat(CmdSet):
+    def at_cmdset_creation(self):
+            self.add(CmdAttack())
 
 """
 From here is a copy paste of the tutorial world's "on hit" code. It still needs to 

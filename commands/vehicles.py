@@ -19,7 +19,7 @@ class CmdEnterVehicle(Command):
     key = "embark"
     aliases = ["embark the", "enter", "enter the"]
     locks = "cmd:cmdLocationCheck()"
-
+    help_category = "Vehicles"
     def parse(self):
         # Snags whatever the targeted vehicle is.
         # Important for 'landing bay' areas.
@@ -32,7 +32,7 @@ class CmdEnterVehicle(Command):
             #self.caller.msg("No vehicle found")
             #return
         target = self.obj
-        caller.location.msg_contents("%s enters the %s.") % (caller.key, target)
+        caller.location.msg_contents(f"{caller.key} enters the {target}.")
         caller.move_to(target)
 
 
@@ -50,13 +50,13 @@ class CmdLeaveVehicle(Command):
     key = "disembark"
     aliases = ["exit"]
     locks = "cmd:cmdLocationCheck()"
-
+    help_category = "Vehicles"
     def func(self):
         caller = self.caller
         door = self.obj
         vehicle = door.location
         parent = vehicle.location
-        caller.location.msg_contents("%s exits the %s via the %s.") % (caller.key, vehicle, door)
+        caller.location.msg_contents(f"{caller.key} exits the {vehicle} via the {door}.")
         caller.move_to(parent)
 
 class CmdSetVehicle(CmdSet):

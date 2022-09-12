@@ -9,6 +9,7 @@ possess verbs to exit the object to the parent.
 
 from evennia import DefaultObject
 from commands.vehicles import CmdSetVehicle
+from commands.vehicles import CmdSetDoor
 
 class VehicleObject(DefaultObject):
 
@@ -30,8 +31,10 @@ class VehicleDoorObject(DefaultObject):
         self.cmdset.add_default(CmdSetDoor)
 
     def return_appearance(self, looker):
-        vehicle = self.location
-        parent = vehicle.location
-
-        outside = super().return_appearance(parent)
-        return outside
+        door = self.obj
+        vehicle = door.location
+        outside = vehicle.location
+        outsideText = super().return_appearance(outside)
+        text = super().return_appearance(looker)
+        text += "\n" + outsideText
+        return text
