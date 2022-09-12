@@ -27,4 +27,11 @@ class VehicleDoorObject(DefaultObject):
         # Ideally, I want to have this object in a state
         # Where it can be set down, and be ready for use.
 
-        self.cmdset.add_default(CmdSetVehicle)
+        self.cmdset.add_default(CmdSetDoor)
+
+    def return_appearance(self, looker):
+        vehicle = self.location
+        parent = vehicle.location
+
+        outside = super().return_appearance(parent)
+        return outside
