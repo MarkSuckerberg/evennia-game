@@ -40,7 +40,7 @@ def cmdLocationCheck(accessing_obj, accessed_obj, *args, **kwargs):
     accessedParent = accessed_obj.location
     # This next part checks to make sure you're not already inside the object, 
     # i.e., to prevent entering the ship when you're already inside
-    if accessedParent == accessorParent and not accessed_obj.location == accessed_obj:
+    if accessedParent == accessorParent and not accessed_obj.location == accessed_obj and not accessed_obj == accessed_obj.location:
         nearby = True
     else:
         nearby = False
