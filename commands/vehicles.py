@@ -7,7 +7,7 @@ from evennia import Command, CmdSet
 
 class CmdEnterVehicle(Command):
     """
-    Allows you to enter the vehicle
+    Used to enter a vehicle.
     
     Usage:
       embark [<vehicle>]
@@ -38,7 +38,7 @@ class CmdEnterVehicle(Command):
 
 class CmdLeaveVehicle(Command):
     """
-    Used to leave a vehicle
+    Used to leave a vehicle.
  
     Usage:
       disembark

@@ -31,7 +31,7 @@ class VehicleDoorObject(DefaultObject):
         self.cmdset.add_default(CmdSetDoor)
 
     def return_appearance(self, looker):
-        door = self.obj
+        door = self
         vehicle = door.location
         outside = vehicle.location
         outsideText = super().return_appearance(outside)
